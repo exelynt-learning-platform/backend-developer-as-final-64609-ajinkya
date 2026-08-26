@@ -124,8 +124,7 @@ Content-Type: application/json
 {
   "resourceId": 1,
   "startTime": "2026-09-01T10:00:00",
-  "endTime": "2026-09-01T12:00:00",
-  "userId": 2
+  "endTime": "2026-09-01T12:00:00"
 }
 ```
 

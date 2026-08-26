@@ -26,6 +26,24 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             @Param("user") User user,
             Pageable pageable);
 
+        @Query("SELECT COUNT(r) > 0 FROM Reservation r WHERE r.resource.id = :resourceId " +
+           "AND r.status <> com.sunbeam.entity.ReservationStatus.CANCELLED " +
+           "AND r.startTime < :endTime AND r.endTime > :startTime")
+        boolean existsOverlappingReservation(
+            @Param("resourceId") Long resourceId,
+            @Param("startTime") java.time.LocalDateTime startTime,
+            @Param("endTime") java.time.LocalDateTime endTime);
+
+            @Query("SELECT COUNT(r) > 0 FROM Reservation r WHERE r.id <> :reservationId " +
+               "AND r.resource.id = :resourceId " +
+               "AND r.status <> com.sunbeam.entity.ReservationStatus.CANCELLED " +
+               "AND r.startTime < :endTime AND r.endTime > :startTime")
+            boolean existsOverlappingReservationExcludingId(
+                @Param("reservationId") Long reservationId,
+                @Param("resourceId") Long resourceId,
+                @Param("startTime") java.time.LocalDateTime startTime,
+                @Param("endTime") java.time.LocalDateTime endTime);
+
     List<Reservation> findByUser(User user);
     Page<Reservation> findByUser(User user, Pageable pageable);
 }

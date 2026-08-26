@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunbeam.dto.ReservationDto;
+import com.sunbeam.dto.ReservationStatusRequest;
 import com.sunbeam.entity.Reservation;
 import com.sunbeam.entity.ReservationStatus;
 import com.sunbeam.entity.Role;
@@ -96,7 +98,22 @@ public class ReservationController {
 
     @PutMapping("/{id}/status")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Reservation> updateReservationStatus(@PathVariable Long id, @RequestBody ReservationDto dto) {
-        return ResponseEntity.ok(reservationService.updateReservationStatus(id, dto.getStatus()));
+    public ResponseEntity<Reservation> updateReservationStatus(@PathVariable Long id,
+            @Valid @RequestBody ReservationStatusRequest request) {
+        return ResponseEntity.ok(reservationService.updateReservationStatus(id, request.getStatus()));
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Reservation> updateReservation(@PathVariable Long id,
+            @Valid @RequestBody ReservationDto dto) {
+        return ResponseEntity.ok(reservationService.updateReservation(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> deleteReservation(@PathVariable Long id) {
+        reservationService.deleteReservation(id);
+        return ResponseEntity.noContent().build();
     }
 }

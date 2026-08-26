@@ -19,9 +19,6 @@ import lombok.Setter;
 public class ReservationDto {
     private Long id;
 
-    @NotNull(message = "User id is required")
-    private Long userId;
-
     @NotNull(message = "Resource id is required")
     private Long resourceId;
 
