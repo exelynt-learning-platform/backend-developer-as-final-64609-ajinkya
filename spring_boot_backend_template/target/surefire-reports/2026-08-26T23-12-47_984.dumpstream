@@ -1,0 +1,5 @@
+# Created at 2026-08-26T23:12:48.665
+Boot Manifest-JAR contains absolute paths in classpath 'F:\exelynt-learning\backend-developer-as-final-64609-ajinkya\spring_boot_backend_template\target\test-classes'
+Hint: <argLine>-Djdk.net.URLClassPath.disableClassPathURLCheck=true</argLine>
+'other' has different root
+
